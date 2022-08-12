@@ -1,0 +1,54 @@
+
+architecture: replication
+
+auth:
+  enabled: false
+
+sentinel:
+  enabled: false
+
+metrics:
+  enabled: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+
+master:
+  count: 1
+  persistence:
+    enabled: false
+    accessModes:
+    - ReadWriteOnce
+  resources:
+    limits:
+      memory: 512Mi
+      cpu: 256m
+    requests:
+      memory: 512Mi
+      cpu: 256m
+replica:
+  replicaCount: 2
+  autoscaling:
+    enabled: false
+    maxReplicas: 100
+    minReplicas: 1
+    targetCPU: 50
+    targetMemory: 25
+  persistence:
+    enabled: false
+    accessModes:
+    - ReadWriteOnce
+    size: 2Gi
+  resources:
+    limits:
+      memory: 512Mi
+      cpu: 256m
+    requests:
+      memory: 512Mi
+      cpu: 256m
+

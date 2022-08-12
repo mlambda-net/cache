@@ -1,0 +1,58 @@
+
+clusterDomain: cluster.local
+usePassword: false
+
+
+service:
+  type: ClusterIP
+
+cluster:
+  init: true
+  nodes: 6
+  replicas: 1
+  externalAccess:
+    enabled: false
+    service:
+      type: LoadBalancer
+      loadBalancerIP:
+      - 10.0.0.1
+      - 10.0.0.2
+      - 10.0.0.3
+      - 10.0.0.4
+      - 10.0.0.5
+      - 10.0.0.6
+
+metrics:
+  enabled: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+persistence:
+  size: 2Gi
+  #storageClass: "openebs-hostpath"
+
+redis:
+  podAnnotations:
+    linkerd.io/inject: disabled
+  resources:
+    limits:
+      memory: 512Mi
+      cpu: 256m
+    requests:
+      memory: 512Mi
+      cpu: 256m
+
+volumePermissions:
+  enabled: false
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi

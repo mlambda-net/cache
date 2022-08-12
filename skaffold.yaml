@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+
+metadata:
+  name: redis-cluster
+
+deploy:
+  helm:
+    releases:
+      #- name: cache
+      #  namespace: store
+      #  repo: https://charts.bitnami.com/bitnami
+      #  remoteChart: redis
+      #  valuesFiles:
+      #      - helm/values/dev-redis.yaml
+
+      - name: redis-cluster
+        version: 7.6.4
+        namespace: store
+        repo: https://charts.bitnami.com/bitnami
+        remoteChart: redis-cluster
+        valuesFiles:
+            - helm/values/dev-cluster.yaml

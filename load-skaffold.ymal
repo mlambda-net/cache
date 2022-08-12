@@ -1,0 +1,29 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+
+metadata:
+  name: load
+
+build:
+  tagPolicy:
+    gitCommit:
+      variant: Tags
+
+  local:
+    push: true
+
+  artifacts:
+    - image: mlambdanet/load
+      context: .
+      docker:
+        dockerfile: Dockerfile
+
+deploy:
+  helm:
+    releases:
+      - name: load
+        namespace: cache
+        chartPath: helm/load
+        setValueTemplates:
+          env: "{{.ENV}}"
+
